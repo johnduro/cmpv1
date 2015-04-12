@@ -1,4 +1,5 @@
 
+#include <list>
 #include <stdexcept>
 
 struct Coeff
@@ -48,6 +49,6 @@ public:
 		ComputorException(std::string const & errorMsg) throw();
 		~ComputorException() throw();
 		virtual const char* 		what() const throw();
-	}
+	};
 
 };

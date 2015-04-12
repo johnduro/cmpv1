@@ -1,6 +1,9 @@
 
 #include <string>
 #include <cctype>
+#include <iostream>
+#include <sstream>
+#include <algorithm>
 #include "Computor.hpp"
 
 
@@ -22,7 +25,7 @@ void			Computor::_replaceSubstract( void )
 	bool						remove;
 	size_t						pos = 0;
 
-	while (pos < this->_str.lenght() && ((pos = this->_str.find('-', pos)) != std::string::npos))
+	while (pos < this->_str.length() && ((pos = this->_str.find('-', pos)) != std::string::npos))
 	{
 		remove = true ;
 		// back = begin + pos;
@@ -72,10 +75,10 @@ void			Computor::_handle(std::string & part, int sign)
 		coeff.degree = 0; //mettre tout le temps a 1 ?
 		if ((pos = token.find('*')) != std::string::npos)
 		{
-			if (token.find('x', 0, pos) != std::string::npos || token.find('X', 0, pos) != std::string::npos)
+			if (token.find("x", 0, pos) != std::string::npos || token.find("X", 0, pos) != std::string::npos)
 			{
 				coeff.value = (std::stod(token.substr(pos + 1)) * sign);
-				if ((pos2 = token.find('^', 0, pos)) != std::string::npos)
+				if ((pos2 = token.find("^", 0, pos)) != std::string::npos)
 					coeff.degree = std::stoi(token.substr(pos2 + 1, pos - 1));
 				else
 					coeff.degree = 1;
@@ -124,12 +127,12 @@ void			Computor::treatEquation( std::string eq )
 	this->_str = eq;
 	this->_str.erase(std::remove_if(this->_str.begin(), this->_str.end(), ::isspace), this->_str.end());
 	//except ?
-	this->_replaceSubtract();
+	this->_replaceSubstract();
 	this->_getLeftRight();
 	try
 	{
-		this->_handle(&this->left, 1);
-		this->_handle(&this->right, -1);
+		this->_handle(this->_left, 1);
+		this->_handle(this->_right, -1);
 	}
 	catch (std::exception & e)
 	{
