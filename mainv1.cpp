@@ -1,7 +1,7 @@
 // ComputerV1.cpp�: d�finit le point d'entr�e pour l'application console.
 //
 
-#include "Poly.h"
+#include "Polyv1.hpp"
 
 int main(int argc, char* argv[])
 {

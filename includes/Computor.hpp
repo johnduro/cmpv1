@@ -19,9 +19,9 @@ private:
 	std::string			_right;
 	std::list<Coeff>	_coeffs;
 	int					_maxDegree;
-	int					_a;
-	int					_b;
-	int					_c;
+	double				_a;
+	double				_b;
+	double				_c;
 
 	Computor( const Computor & src );
 	Computor &		operator=( const Computor & src );

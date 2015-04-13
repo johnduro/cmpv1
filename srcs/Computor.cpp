@@ -185,7 +185,7 @@ void			Computor::_findSolutions( void )
 	if (this->_maxDegree == 0)
 		std::cout << "R" << std::endl;
 	else if (this->_maxDegree == 1)
-		std::cout << "The solution is :" << -(this->_a / this->_b) <<std::endl;
+		std::cout << "The solution is :" << -(this->_c / this->_b) <<std::endl;
 	else if (this->_maxDegree == 2)
 	{
 		double		delta = (this->_b * this->_b) - (4 * this->_a * this->_c);
@@ -195,15 +195,18 @@ void			Computor::_findSolutions( void )
 		if (delta > 0)
 		{
 			std::cout << "Discriminant is strictly positive, the two solutions are :" << std::endl;
-			sol_1 = (-(this->_b) - std::sqrt(delta)) / (2 * this->_c);
-			sol_2 = (-(this->_b) + std::sqrt(delta)) / (2 * this->_c);
+			sol_1 = (-(this->_b) - std::sqrt(delta)) / (2 * this->_a);
+			sol_2 = (-(this->_b) + std::sqrt(delta)) / (2 * this->_a);
+			// sol_1 = (-(this->_b) - std::sqrt(delta)) / (2 * this->_a);
+			// sol_2 = (-(this->_b) + std::sqrt(delta)) / (2 * this->_a);
 			std::cout << "Number one : " << sol_1 << std::endl;
 			std::cout << "Number two : " << sol_2 << std::endl;
 		}
 		else if (delta == 0)
 		{
 			std::cout << "The solution is :" << std::endl;
-			sol_1 = -(this->_a) / (2 * this->_b);
+			sol_1 = -(this->_b) / (2 * this->_a);
+			// sol_1 = -(this->_b) / (2 * this->_a);
 			std::cout << sol_1 << std::endl;
 		}
 		else
@@ -218,13 +221,18 @@ void			Computor::_findABC( void )
 
 	for (it = this->_coeffs.begin(); it != ite; it++)
 	{
+		if (it->value == 0)
+			continue ;
 		if (it->degree == 0)
-			this->_a = it->value;
+			this->_c = it->value;
 		else if (it->degree == 1)
 			this->_b = it->value;
 		else if (it->degree == 2)
-			this->_c = it->value;
+			this->_a = it->value;
 	}
+	std::cout << "a = " << this->_a << std::endl
+			  << "b = " << this->_b << std::endl
+			  << "c = " << this->_c << std::endl;
 }
 
 
