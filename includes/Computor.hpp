@@ -19,6 +19,9 @@ private:
 	std::string			_right;
 	std::list<Coeff>	_coeffs;
 	int					_maxDegree;
+	int					_a;
+	int					_b;
+	int					_c;
 
 	Computor( const Computor & src );
 	Computor &		operator=( const Computor & src );
@@ -26,6 +29,11 @@ private:
 	void			_replaceSubstract( void );
 	void			_getLeftRight( void );
 	void			_handle(std::string & part, int sign);
+	void			_reducedForm( void );
+	void			_printCoeffs( std::string info );
+	void			_findSolutions( void );
+	void			_findABC( void );
+	void			_debugList();
 
 
 // ** PUBLIC ** //
