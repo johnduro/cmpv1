@@ -1,11 +1,20 @@
+#ifndef COMPUTOR_HPP
+#define COMPUTOR_HPP
 
 #include <list>
 #include <stdexcept>
+#include <string>
+#include <cctype>
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+
+#include "Fraction.hpp"
 
 struct Coeff
 {
-	double		value;
-	int			degree;
+	double			value;
+	double			degree;
 };
 
 
@@ -22,6 +31,7 @@ private:
 	double				_a;
 	double				_b;
 	double				_c;
+	bool					_debug;
 
 	Computor( const Computor & src );
 	Computor &		operator=( const Computor & src );
@@ -31,10 +41,13 @@ private:
 	void			_handle(std::string & part, int sign);
 	void			_reducedForm( void );
 	void			_printCoeffs( std::string info );
-	void			_findSolutions( void );
+	void			_findSolutions(bool arg);
 	void			_findABC( void );
 	void			_debugList();
-
+	void 			_Alpha(std::string str, double real, double image);
+	void 			_checkOthers(std::string str);
+	void 			_checkToken(std::string token);
+	void 			_checkReducedForm( void );
 
 // ** PUBLIC ** //
 
@@ -42,7 +55,7 @@ public:
 	Computor( void );
 	~Computor( void );
 
-	void			treatEquation( std::string eq );
+	void			treatEquation( std::string eq, bool arg, bool debug );
 
 
 // ** EXCEPTIONS ** //
@@ -60,3 +73,5 @@ public:
 	};
 
 };
+
+#endif
