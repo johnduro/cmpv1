@@ -1,5 +1,17 @@
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   Computor.hpp                                       :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2015/04/25 17:52:30 by mle-roy           #+#    #+#             //
+//   Updated: 2015/04/25 18:25:53 by mle-roy          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 #ifndef COMPUTOR_HPP
-#define COMPUTOR_HPP
+# define COMPUTOR_HPP
 
 #include <list>
 #include <stdexcept>
@@ -31,7 +43,7 @@ private:
 	double				_a;
 	double				_b;
 	double				_c;
-	bool					_debug;
+	bool				_debug;
 
 	Computor( const Computor & src );
 	Computor &		operator=( const Computor & src );
@@ -48,6 +60,8 @@ private:
 	void 			_checkOthers(std::string str);
 	void 			_checkToken(std::string token);
 	void 			_checkReducedForm( void );
+	void			_degOneSolution(bool fraction);
+	void			_degTwoSolution(bool fraction);
 
 // ** PUBLIC ** //
 
@@ -74,4 +88,4 @@ public:
 
 };
 
-#endif
+#endif // ** COMPUTOR_HPP ** //

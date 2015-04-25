@@ -6,7 +6,7 @@
 //   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/24 18:59:06 by mle-roy           #+#    #+#             //
-//   Updated: 2015/04/24 18:59:47 by mle-roy          ###   ########.fr       //
+//   Updated: 2015/04/25 17:58:41 by mle-roy          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -119,7 +119,7 @@ void			Computor::_handle(std::string & part, int sign)
 		if (token == "")
 			continue ;
 		coeff.value = 0;
-		coeff.degree = 0; //mettre tout le temps a 1 ?
+		coeff.degree = 0;
 		this->_checkToken(token);
 		if ((pos = token.find('*')) != std::string::npos)
 		{
@@ -134,7 +134,7 @@ void			Computor::_handle(std::string & part, int sign)
 			}
 			else
 			{
-				coeff.value = (std::stod(token) * sign); //s arrete bien ?
+				coeff.value = (std::stod(token) * sign);
 				if ((pos2 = token.find('^', pos)) != std::string::npos)
 					coeff.degree = std::stod(token.substr(pos2 + 1));
 				else
@@ -238,7 +238,60 @@ void 			Computor::_Alpha(std::string str, double real, double image)
 	std::cout << "Number " << str << " : " << real << alpha << std::endl;
 }
 
-void			Computor::_findSolutions(bool arg)
+void			Computor::_degOneSolution(bool fraction)
+{
+	double		solution = -(this->_c / this->_b); // -(b / a) ou -b / a ?????
+
+	if (solution == -0)
+		solution = 0;
+
+	if (fraction)
+		Fraction(this->_maxDegree, this->_b, this->_c, 0);
+	else
+		std::cout << "The solution is : " << solution << std::endl;
+}
+
+void			Computor::_degTwoSolution(bool fraction)
+{
+	double		delta = (this->_b * this->_b) - (4 * this->_a * this->_c);
+	double		sol_1;
+	double		sol_2;
+
+	if (fraction)
+	{
+		Fraction(this->_maxDegree, this->_a, this->_b, delta);
+		return;
+	}
+
+	if (delta > 0)
+	{
+		std::cout << "Discriminant is strictly positive, the two solutions are :" << std::endl;
+		sol_1 = (-(this->_b) - Math::SQRT(delta)) / (2 * this->_a);
+		sol_2 = (-(this->_b) + Math::SQRT(delta)) / (2 * this->_a);
+
+		std::cout << "Number one : " << sol_1 << std::endl;
+		std::cout << "Number two : " << sol_2 << std::endl;
+	}
+	else if (delta == 0)
+	{
+		std::cout << "The solution is : " << std::endl;
+		sol_1 = -(this->_b) / (2 * this->_a);
+
+		std::cout << sol_1 << std::endl;
+	}
+	else
+	{
+		double		sol_i1 = - Math::SQRT(-delta) / (2 * this->_a);
+		double		sol_i2 = Math::SQRT(-delta) / (2 * this->_a);
+
+		sol_1 = -(this->_b) / (2 * this->_a);
+		sol_2 = -(this->_b) / (2 * this->_a);
+		this->_Alpha("one", sol_1, sol_i1);
+		this->_Alpha("two", sol_2, sol_i2);
+	}
+}
+
+void			Computor::_findSolutions(bool fraction)
 {
 	if (this->_maxDegree > 2)
 	{
@@ -251,56 +304,9 @@ void			Computor::_findSolutions(bool arg)
 	if (this->_maxDegree == 0)
 		std::cout << "The solution is {R} All real numbers [-oo, +oo]" << std::endl;
 	else if (this->_maxDegree == 1)
-	{
-		double solution = -(this->_c / this->_b);
-		if (solution == -0)
-			solution = 0;
-
-		if (arg)
-			Fraction(this->_maxDegree, this->_b, this->_c, 0);
-		else
-			std::cout << "The solution is : " << solution << std::endl;
-	}
+		this->_degOneSolution(fraction);
 	else if (this->_maxDegree == 2)
-	{
-		double		delta = (this->_b * this->_b) - (4 * this->_a * this->_c);
-		double		sol_1;
-		double		sol_2;
-
-		if (arg)
-		{
-			Fraction(this->_maxDegree, this->_a, this->_b, delta);
-			return;
-		}
-
-		if (delta > 0)
-		{
-			std::cout << "Discriminant is strictly positive, the two solutions are :" << std::endl;
-			sol_1 = (-(this->_b) - Math::SQRT(delta)) / (2 * this->_a);
-			sol_2 = (-(this->_b) + Math::SQRT(delta)) / (2 * this->_a);
-
-			std::cout << "Number one : " << sol_1 << std::endl;
-			std::cout << "Number two : " << sol_2 << std::endl;
-		}
-		else if (delta == 0)
-		{
-			std::cout << "The solution is : " << std::endl;
-			sol_1 = -(this->_b) / (2 * this->_a);
-
-			std::cout << sol_1 << std::endl;
-		}
-		else
-		{
-			sol_1 = -(this->_b) / (2 * this->_a);
-			double sol_i1 = - Math::SQRT(-delta) / (2 * this->_a);
-
-			sol_2 = -(this->_b) / (2 * this->_a);
-			double sol_i2 = Math::SQRT(-delta) / (2 * this->_a);
-
-			this->_Alpha("one", sol_1, sol_i1);
-			this->_Alpha("two", sol_2, sol_i2);
-		}
-	}
+		this->_degTwoSolution(fraction);
 }
 
 void			Computor::_findABC( void )
@@ -330,11 +336,14 @@ Computor::Computor( void ) {}
 
 Computor::~Computor( void ) {}
 
-void			Computor::_debugList()
+void			Computor::_debugList( void )
 {
+	std::list<Coeff>::iterator		it;
+	std::list<Coeff>::iterator		ite = this->_coeffs.end();
+
 	std::cout << "**** DEBUG ****" << std::endl;
-	for (std::list<Coeff>::iterator it = this->_coeffs.begin(); it != this->_coeffs.end(); it++)
-		std::cout << "[" << it->value << "][" << it->degree << "]" << std::endl;
+	for (it = this->_coeffs.begin(); it != ite; it++)
+		std::cout << "Coeff : [" << it->value << "][" << it->degree << "]" << std::endl;
 	std::cout << "***** END *****" << std::endl;
 }
 
@@ -363,7 +372,7 @@ void 			Computor::_checkReducedForm( void )
 }
 
 
-void			Computor::treatEquation( std::string eq, bool arg, bool debug )
+void			Computor::treatEquation( std::string eq, bool fraction, bool debug )
 {
 	std::cout << "Treating equation : " << eq << std::endl;
 	this->_initComputor();
@@ -385,14 +394,14 @@ void			Computor::treatEquation( std::string eq, bool arg, bool debug )
 		throw ComputorException("Handle error");
 	}
 	if (debug)
- 		this->_debugList(); // debug
+ 		this->_debugList();
 	this->_printCoeffs("Before reduced form: ");
 	this->_reducedForm();
 	this->_checkReducedForm();
 	std::cout << "Polynomial degree: " << this->_maxDegree << std::endl;
  	if (debug)
-		this->_debugList(); // debug
-	this->_findSolutions(arg);
+		this->_debugList();
+	this->_findSolutions(fraction);
 	std::cout << "---------------------------------------" << std::endl;
 }
 

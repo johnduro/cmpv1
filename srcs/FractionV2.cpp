@@ -1,23 +1,24 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   Fraction.cpp                                       :+:      :+:    :+:   //
+//   FractionV2.cpp                                     :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/04/24 18:55:18 by mle-roy           #+#    #+#             //
-//   Updated: 2015/04/25 18:30:38 by mle-roy          ###   ########.fr       //
+//   Created: 2015/04/25 18:30:50 by mle-roy           #+#    #+#             //
+//   Updated: 2015/04/25 18:38:53 by mle-roy          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include "Fraction.hpp"
 
-Fraction::Fraction(int deg, double a, double b, double delta) : _D2(false)
+Fraction::Fraction(int deg, double a, double b, double delta)
+	: _deg(deg), _a(a), _b(b), _delta(delta), _D2(false)
 {
 	if (deg == 1)
-		this->_Resolve_1d(a, b, "The solution is :");
+		this->_Resolve_1d("The solution is :");
 	else
-		this->_Resolve_2d(a, b, delta);
+		this->_Resolve_2d();
 }
 
 Fraction::~Fraction() {}
@@ -92,28 +93,28 @@ std::pair<int, int>	 Fraction::_FactoriseSqrt(int n)
 	return (std::make_pair(x, d));
 }
 
-void  Fraction::_Resolve_1d(double x, double y, std::string str)
+void  Fraction::_Resolve_1d(std::string str)
 {
-	unsigned long p = Math::getComaNb(x);
-	unsigned long q = Math::getComaNb(y);
-	std::string alpha = "ahméd";
+	unsigned long			p = Math::getComaNb(this->_a);
+	unsigned long			q = Math::getComaNb(this->_b);
+	std::string				alpha;
 
 	if (p > 0)
 	{
 		p = Math::POW(10, p);
-		x *= p;
+		this->_a *= p;
 	}
 	if (q > 0)
 	{
 		q = Math::POW(10, q);
-		y *= q;
+		this->_b *= q;
 	}
 
-	p = (p > 0)? p : 1;
-	q = (q > 0)? q : 1;
+	p = (p > 0) ? p : 1;
+	q = (q > 0) ? q : 1;
 
-	long a = static_cast<long>(x);
-	long b = static_cast<long>(y);
+	long				a = static_cast<long>(this->_a);
+	long				b = static_cast<long>(this->_b);
 
 	if (this->_D2)
 		b *= -1;
@@ -151,7 +152,7 @@ void  Fraction::_Resolve_1d(double x, double y, std::string str)
 	std::cout << str << alpha << std::endl;
 }
 
-void  Fraction::_Resolve_2d(double a, double b, double delta)
+void		Fraction::_Resolve_2d(double a, double b, double delta)
 {
 	unsigned long p = 0;
 	if (delta != 0)
@@ -178,7 +179,7 @@ void  Fraction::_Resolve_2d(double a, double b, double delta)
 	}
 }
 
-void  Fraction::_PositivD(double a, double b, std::pair<int, int> racineD, unsigned long p)
+void		Fraction::_PositivD(double a, double b, std::pair<int, int> racineD, unsigned long p)
 {
 	if (this->_negative)
 		std::cout << "Discriminant is strictly negative, the two solutions are :" << std::endl;
@@ -211,7 +212,7 @@ void  Fraction::_PositivD(double a, double b, std::pair<int, int> racineD, unsig
 	this->_print(2 * a, b, f, racineD.first, racineD.second, part.second, false);
 }
 
-void  Fraction::_coma(double *a, double *b)
+void		Fraction::_coma(double *a, double *b)
 {
 	unsigned int pA = 1;
 	if (*a != 0)
