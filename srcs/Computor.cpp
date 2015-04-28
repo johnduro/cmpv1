@@ -6,7 +6,7 @@
 //   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/24 18:59:06 by mle-roy           #+#    #+#             //
-//   Updated: 2015/04/25 17:58:41 by mle-roy          ###   ########.fr       //
+//   Updated: 2015/04/28 16:48:51 by mle-roy          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -210,7 +210,10 @@ void			Computor::_printCoeffs( std::string info )
 		}
 		else
 			std::cout << it->value;
-		std::cout << " * X^" << it->degree;
+		if (it->degree > 1)
+			std::cout << " * X^" << it->degree;
+		else if (it->degree == 1)
+			std::cout << " * x ";
 		i++;
 	}
 
@@ -240,7 +243,7 @@ void 			Computor::_Alpha(std::string str, double real, double image)
 
 void			Computor::_degOneSolution(bool fraction)
 {
-	double		solution = -(this->_c / this->_b); // -(b / a) ou -b / a ?????
+	double		solution = -(this->_c / this->_b);
 
 	if (solution == -0)
 		solution = 0;
@@ -291,6 +294,14 @@ void			Computor::_degTwoSolution(bool fraction)
 	}
 }
 
+void			Computor::_degZeroSolution( void )
+{
+	if (this->_c == 0)
+		std::cout << "The solution is {R} All real numbers [-oo, +oo]" << std::endl;
+	else
+		std::cout << "There is no solution / Es gibt kein loesung" << std::endl;
+}
+
 void			Computor::_findSolutions(bool fraction)
 {
 	if (this->_maxDegree > 2)
@@ -302,7 +313,7 @@ void			Computor::_findSolutions(bool fraction)
 	}
 	this->_findABC();
 	if (this->_maxDegree == 0)
-		std::cout << "The solution is {R} All real numbers [-oo, +oo]" << std::endl;
+		this->_degZeroSolution();
 	else if (this->_maxDegree == 1)
 		this->_degOneSolution(fraction);
 	else if (this->_maxDegree == 2)

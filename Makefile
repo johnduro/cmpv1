@@ -11,7 +11,9 @@ CFLAGS				=		-std=c++11 -g3 -Wall -Wextra -Werror -c \
 LFLAGS				=		-o
 
 SRC					=		main.cpp		\
-							Computor.cpp Fraction.cpp Math.cpp
+							Computor.cpp \
+							Fraction.cpp \
+							Math.cpp
 
 OBJ					=		$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.cpp=.o)))
 

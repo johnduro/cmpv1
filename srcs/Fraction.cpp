@@ -6,7 +6,7 @@
 //   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/24 18:55:18 by mle-roy           #+#    #+#             //
-//   Updated: 2015/04/25 18:30:38 by mle-roy          ###   ########.fr       //
+//   Updated: 2015/04/28 16:51:30 by mle-roy          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -96,7 +96,7 @@ void  Fraction::_Resolve_1d(double x, double y, std::string str)
 {
 	unsigned long p = Math::getComaNb(x);
 	unsigned long q = Math::getComaNb(y);
-	std::string alpha = "ahméd";
+	std::string alpha = "wut";
 
 	if (p > 0)
 	{
@@ -275,7 +275,9 @@ void  Fraction::_print(double a, double b, double f, int Rf, int Rd, int Pd, boo
 	}
 	if (ssn)
 		restUp_2 *= -1;
+
 	std::string sign = "+";
+
 	if (restUp_2 < 0)
 	{
 		restUp_2 *= -1;

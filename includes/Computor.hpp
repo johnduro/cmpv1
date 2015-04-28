@@ -6,7 +6,7 @@
 //   By: mle-roy <mle-roy@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/25 17:52:30 by mle-roy           #+#    #+#             //
-//   Updated: 2015/04/25 18:25:53 by mle-roy          ###   ########.fr       //
+//   Updated: 2015/04/28 16:41:03 by mle-roy          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -62,6 +62,7 @@ private:
 	void 			_checkReducedForm( void );
 	void			_degOneSolution(bool fraction);
 	void			_degTwoSolution(bool fraction);
+	void			_degZeroSolution( void );
 
 // ** PUBLIC ** //
 
